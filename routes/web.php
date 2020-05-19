@@ -2,6 +2,7 @@
 
 use App\url;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Validator;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +20,23 @@ Route::get('/', function () {
 });
 
 Route::post('/', function () {
-    $url = Url::where('url', request()->get('url'))->first();
-    if ($url) {
-        return view('result')->with('urlshortened', $url->urlshortened);
+    $url = request()->get('url');
+
+    //validation
+    Validator::make(compact('url'), ['url' => 'required|url'])->validate();
+    // if ($validation->fails()) {
+    //     dd('failed');
+    // }
+
+    //verify if url is already created it retourn it
+    $record = Url::where('url', $url)->first();
+    if ($record) {
+        return view('result')->with('urlshortened', $record->urlshortened);
     }
 
 
     $row = Url::create([
-        'url' => request()->get('url'),
+        'url' => $url,
         'urlshortened' => Url::get_unique_short_url()
     ]);
     if ($row) {

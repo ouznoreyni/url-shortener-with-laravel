@@ -15,12 +15,23 @@
                         <div class="col-12 col-md-9 mb-2 mb-md-0">
                             <input type="text" name="url"
                                 class="form-control form-control-lg"
-                                placeholder="Entrer l'url que vous voullez raccourcir...">
+                                placeholder="Entrer l'url que vous voullez raccourcir..."
+                                value="{{ old('url') }}">
                         </div>
                         <div class="col-12 col-md-3">
                             <button type="submit"
                                 class="btn btn-block btn-lg btn-primary">Raccourcir</button>
                         </div>
+
+                        {!!
+                        $errors->first(
+                        'url',
+                        '<div
+                            class="col-12 col-md-9 mb-2 mb-md-0 text-danger text-center mt-3 font-weight-bold">
+                            :message
+                        </div>
+                        ')
+                        !!}
                     </div>
                 </form>
             </div>
