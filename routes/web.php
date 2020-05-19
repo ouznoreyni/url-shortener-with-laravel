@@ -23,7 +23,18 @@ Route::post('/', function () {
     $url = request()->get('url');
 
     //validation
-    Validator::make(compact('url'), ['url' => 'required|url'])->validate();
+    Validator::make(
+        compact('url'),
+        [
+            'url' => ['required', 'url']
+        ]
+        //message error
+        //, [
+        //     'url.required' => "Vous devez fournir une URL.",
+        //     'url.url' => "Url est invalide."
+
+        // ]
+    )->validate();
     // if ($validation->fails()) {
     //     dd('failed');
     // }
